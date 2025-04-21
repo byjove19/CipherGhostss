@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const usersRoutes = require('./routes/users');
 const Post = require('./models/Post');
+const marked = require('marked');
 
 const path = require('path');
 
@@ -71,6 +72,8 @@ app.get('/post/:slug', async (req, res) => {
   }
 });
 
+// Assuming you get `post.content` from your database
+const htmlContent = marked(post.content);
 
 app.use('/api/admin', adminRoutes);  // Admin routes for creating posts
 app.use('/api', linksRoutes);        // Public route to fetch posts
