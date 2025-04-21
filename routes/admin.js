@@ -1,28 +1,22 @@
-// routes/admin.js
 const express = require('express');
-const Post = require('../models/post');
 const router = express.Router();
+const Post = require('../models/Post');
 
-// Route to create a new post
+// Create a new post
 router.post('/create', async (req, res) => {
-  const { title, description, content, category } = req.body;
+  const { title, slug, excerpt, image, content } = req.body;
 
-  if (!title || !description || !content || !category) {
+  // Simple field validation
+  if (!title || !slug || !excerpt || !image || !content) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 
-  const newPost = new Post({
-    title,
-    description,
-    content,
-    category
-  });
-
   try {
-    const savedPost = await newPost.save();
-    res.status(201).json(savedPost);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const newPost = new Post({ title, slug, excerpt, image, content });
+    await newPost.save();
+    res.status(201).json({ message: 'Post created successfully.', post: newPost });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error.', error: err.message });
   }
 });
 
