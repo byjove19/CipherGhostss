@@ -12,5 +12,25 @@ router.get('/posts/:slug', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+router.post('/:id/comments', async (req, res) => {
+  const { username, comment } = req.body;
+
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post.comments) post.comments = [];
+
+    post.comments.push({
+      username,
+      comment,
+      date: new Date()
+    });
+
+    await post.save();
+    res.redirect(`/posts/${req.params.id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error saving comment');
+  }
+});
 
 module.exports = router;

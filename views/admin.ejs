@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - CipherGhostss</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 2rem;
+    }
+    h1, h2 {
+      color: #00ffff;
+    }
+    form {
+      margin-bottom: 2rem;
+      background: #222;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 4px;
+      background: #333;
+      color: #fff;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      background: #00ffff;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      background: #222;
+      margin: 0.5rem 0;
+      padding: 1rem;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    form.inline {
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+
+  <form method="POST" action="/admin/create">
+    <input type="text" name="title" placeholder="Post Title" required />
+    <textarea name="content" rows="8" placeholder="Write your post..." required></textarea>
+    <button type="submit">Create Post</button>
+  </form>
+
+  <h2>All Posts</h2>
+  <ul>
+    <% posts.forEach(post => { %>
+      <li>
+        <span><strong><%= post.title %></strong></span>
+        <div>
+          <form method="GET" action="/admin/edit/<%= post._id %>" class="inline">
+            <button type="submit">Edit</button>
+          </form>
+          <form method="POST" action="/admin/delete/<%= post._id %>" class="inline">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

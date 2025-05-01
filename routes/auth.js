@@ -3,95 +3,84 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-// @route   POST api/auth/register
-// @desc    Register user
-// @access  Public
+// GET Register Page
+router.get('/register', (req, res) => {
+  res.render('signup', { errors: [] });
+});
+
+// GET Login Page
+router.get('/login', (req, res) => {
+  res.render('login', { errors: [] });
+});
+
+// POST Register User
 router.post('/register', [
-    check('username', 'Username is required').not().isEmpty(),
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
+  check('username', 'Username is required').notEmpty(),
+  check('email', 'Valid email required').isEmail(),
+  check('password', 'Password must be 6+ characters').isLength({ min: 6 })
 ], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render('signup', { errors: errors.array() });
+  }
+
+  const { username, email, password } = req.body;
+
+  try {
+    let user = await User.findOne({ $or: [{ email }, { username }] });
+    if (user) {
+      return res.render('signup', { errors: [{ msg: 'User already exists' }] });
     }
 
-    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user = new User({ username, email, password: hashedPassword });
+    await user.save();
 
-    try {
-        // Check if user exists
-        let user = await User.findOne({ $or: [{ email }, { username }] });
-        if (user) {
-            return res.status(400).json({ 
-                errors: [{ msg: 'User already exists' }] 
-            });
-        }
+    // Optionally, auto login or show welcome page then redirect
+    res.render('welcome', { username });
 
-        // Create new user
-        user = new User({
-            username,
-            email,
-            password
-        });
+    // Or redirect after short delay
+    // setTimeout(() => res.redirect('/login'), 2000);
 
-        await user.save();
-
-        // Return JWT token
-        const token = user.getSignedJwtToken();
-
-        res.status(201).json({
-            success: true,
-            token
-        });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 });
 
-// @route   POST api/auth/login
-// @desc    Login user
-// @access  Public
+// POST Login User
 router.post('/login', [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists()
+  check('email', 'Valid email required').isEmail(),
+  check('password', 'Password is required').notEmpty()
 ], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render('login', { errors: errors.array() });
+  }
+
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.render('login', { errors: [{ msg: 'Invalid credentials' }] });
     }
 
-    const { email, password } = req.body;
-
-    try {
-        // Check if user exists
-        const user = await User.findOne({ email }).select('+password');
-        if (!user) {
-            return res.status(401).json({ 
-                errors: [{ msg: 'Invalid credentials' }] 
-            });
-        }
-
-        // Check if password matches
-        const isMatch = await user.matchPassword(password);
-        if (!isMatch) {
-            return res.status(401).json({ 
-                errors: [{ msg: 'Invalid credentials' }] 
-            });
-        }
-
-        // Return JWT token
-        const token = user.getSignedJwtToken();
-
-        res.json({
-            success: true,
-            token
-        });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.render('login', { errors: [{ msg: 'Invalid credentials' }] });
     }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true });
+
+    res.redirect('/');
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 });
 
-module.exports = router; 
+module.exports = router;

@@ -4,33 +4,38 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const ejs = require('ejs');
+const path = require('path');
+
+// Routes
 const adminRoutes = require('./routes/admin');
 const linksRoutes = require('./routes/links');
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const usersRoutes = require('./routes/users');
-const Post = require('./models/Post');
-const marked = require('marked');
+const commentsRoutes = require('./routes/comments');
 
-const path = require('path');
+// Models
+const Post = require('./models/Post');
+const Comment = require('./models/comment');
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
 
-// Routes
+// Set EJS as the templating engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// Public Pages
 app.get('/', async (req, res) => {
   try {
     const posts = await Post.find();
@@ -41,27 +46,53 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { errors: [] });
+
 });
 
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
-// Get all posts
-app.get('/api/posts', async (req, res) => {
-  const posts = await Post.find(); // or Post.find({}) if using MongoDB
-  res.json(posts);
+
+
+// Show admin page
+app.get('/admin', async (req, res) => {
+  const posts = await Post.find();
+  res.render('admin', { posts });
+});
+
+// Create post
+app.post('/admin/create', async (req, res) => {
+  await Post.create({ title: req.body.title, content: req.body.content });
+  res.redirect('/admin');
+});
+
+// Delete post
+app.post('/admin/delete/:id', async (req, res) => {
+  await Post.findByIdAndDelete(req.params.id);
+  res.redirect('/admin');
+});
+
+// Edit form
+app.get('/admin/edit/:id', async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  res.render('edit', { post });
+});
+
+// Update post
+app.post('/admin/edit/:id', async (req, res) => {
+  await Post.findByIdAndUpdate(req.params.id, { title: req.body.title, content: req.body.content });
+  res.redirect('/admin');
 });
 
 app.get('/post', async (req, res) => {
-  const postId = req.query.id;
+  const postId = req.query.id; under /api/comments
+app.use('/posts', require('./routes/posts')); // Keep if needed for legacy support
+
   const post = await Post.findById(postId);
   res.render('post', { post });
 });
-// Other routes above...
-app.use('/api', postRoutes); // This handles /api/posts/:slug
 
-// The static route for individual post page (optional if you want API + frontend)
 app.get('/post/:slug', async (req, res) => {
   try {
     const post = await Post.findOne({ slug: req.params.slug });
@@ -72,13 +103,20 @@ app.get('/post/:slug', async (req, res) => {
   }
 });
 
-// Assuming you get `post.content` from your database
-const htmlContent = marked(post.content);
+// API Routes
+app.get('/api/posts', async (req, res) => {
+  const posts = await Post.find();
+  res.json(posts);
+});
 
-app.use('/api/admin', adminRoutes);  // Admin routes for creating posts
-app.use('/api', linksRoutes);        // Public route to fetch posts
+app.use('/api/admin', adminRoutes);    
+app.use('/api', linksRoutes);           
+app.use('/api', postRoutes);
+app.use('/api/comments', commentsRoutes);  
+app.use('/api/auth', authRoutes);    
 
 
+// Server Start
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

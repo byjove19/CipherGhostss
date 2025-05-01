@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherGhostss | Login</title>
+    <!-- Cyberpunk Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/cyberpunk.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    <div class="wrapper bg-animate">
+        <div class="inner animate__animated animate__fadeInDown">
+            <div class="image-holder">
+                <img src="/assets/images/ai.webp" alt="">
+            </div>
+
+            <!-- Login Form -->
+            <form action="/api/auth/login" method="POST" class="animate__animated animate__fadeInUp">
+                <h3>Login Form</h3>
+
+                <% if (errors && errors.length > 0) { %>
+                    <div style="color: red; margin-bottom: 15px;">
+                        <ul>
+                            <% errors.forEach(error => { %>
+                                <li><%= error.msg %></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                <% } %>
+
+                <div class="form-wrapper">
+                    <input type="email" name="email" placeholder="Email Address" class="form-control" required>
+                    <i class="zmdi zmdi-email"></i>
+                </div>
+
+                <div class="form-wrapper">
+                    <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+
+                <button type="submit" class="glow-on-hover">Login
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+
+                <p>Don't have an account? <a href="/signup" class="signup-link">Sign up here</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

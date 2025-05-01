@@ -7,43 +7,78 @@
     <!-- Cyberpunk Stylesheet -->
     <link rel="stylesheet" href="assets/css/cyberpunk.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  </head>
-  <body>
+</head>
+<body>
     <div class="wrapper bg-animate">
-      <div class="inner animate__animated animate__fadeInDown">
-        <div class="image-holder">
-          <img src="assets/images/ai.webp" alt="">
-        </div>
-        <form action="" class="animate__animated animate__fadeInUp">
-          <h3>Registration Form</h3>
-          <div class="form-wrapper">
-            <input type="text" placeholder="Username" class="form-control" required>
-            <i class="zmdi zmdi-account"></i>
-          </div>
-          
-          <div class="form-wrapper">
-            <input type="email" placeholder="Email Address" class="form-control" required>
-            <i class="zmdi zmdi-email"></i>
-          </div>
-          
-          <div class="form-wrapper">
-            <input type="password" placeholder="Password" class="form-control" required>
-            <i class="zmdi zmdi-lock"></i>
-          </div>
-          
-          <div class="form-wrapper">
-            <input type="password" placeholder="Confirm Password" class="form-control" required>
-            <i class="zmdi zmdi-lock-outline"></i>
-          </div>
-          
+        <div class="inner animate__animated animate__fadeInDown">
+            <div class="image-holder">
+                <img src="assets/images/ai.webp" alt="">
+            </div>
 
-        
-          <button class="glow-on-hover">Register
-            <i class="zmdi zmdi-arrow-right"></i>
-          </button>
-        </form>
-      </div>
+            <!-- Show the Registration Form if User is NOT Logged In -->
+            <form action="/api/auth/register" method="POST" class="animate__animated animate__fadeInUp">
+                <h3>Registration Form</h3>
+                <div class="form-wrapper">
+                    <input type="text" name="username" placeholder="Username" class="form-control" required>
+                    <i class="zmdi zmdi-account"></i>
+                </div>
+
+                <div class="form-wrapper">
+                    <input type="email" name="email" placeholder="Email Address" class="form-control" required>
+                    <i class="zmdi zmdi-email"></i>
+                </div>
+
+                <div class="form-wrapper">
+                    <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+
+                <div class="form-wrapper">
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password" class="form-control" required>
+                    <i class="zmdi zmdi-lock-outline"></i>
+                </div>
+
+                <button type="submit" class="glow-on-hover">Register
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+
+                <p>Already have an account? <a href="/login" class="login-link">Login here</a></p>
+            </form>
+
+            <!-- Show Login Option if User is ALREADY Logged In -->
+            <form action="/api/auth/login" method="POST" class="animate__animated animate__fadeInUp" style="display: none;" id="login-form">
+                <h3>Login Form</h3>
+                <div class="form-wrapper">
+                    <input type="email" name="email" placeholder="Email Address" class="form-control" required>
+                    <i class="zmdi zmdi-email"></i>
+                </div>
+
+                <div class="form-wrapper">
+                    <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+
+                <button type="submit" class="glow-on-hover">Login
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+
+                <p>Don't have an account? <a href="/signup" class="signup-link">Sign up here</a></p>
+            </form>
+        </div>
     </div>
-  </body>
-  
+
+    <script>
+        // Check if the user is already signed in using a simple JavaScript check.
+        // If the user is logged in, show the login form, else show the registration form.
+
+        // Example: This could be based on a cookie or a session check.
+        const userIsLoggedIn = false; // Change this based on your backend logic
+
+        if (userIsLoggedIn) {
+            // Hide registration form and show login form
+            document.querySelector('form[action="/api/auth/register"]').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+    </script>
+</body>
 </html>
