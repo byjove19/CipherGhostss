@@ -4542,4 +4542,60 @@
 	position: relative;
 	z-index: 1;
   }
-  
+  body, html {
+    margin: 0;
+    padding: 1;
+    height: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    background: black;
+	font-size: large;
+}
+
+.cyber-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.left-side {
+    flex: 1;
+    background: black;
+    color: #0f0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.form-container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    color: white;
+}
+
+.hacking-text {
+    z-index: 1;
+    text-align: center;
+    color: #0f0;
+    font-size: 1.2rem;
+}
+
+#matrix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}

@@ -7,7 +7,7 @@ router.post('/create', async (req, res) => {
   const { title, slug, excerpt, image, content } = req.body;
 
   // Simple field validation
-  if (!title || !slug || !excerpt || !image || !content) {
+  if (!title || !slug || !excerpt || !image || !content  ||!isStory) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 

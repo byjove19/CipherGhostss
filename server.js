@@ -116,6 +116,16 @@ app.use('/api/comments', commentsRoutes);
 app.use('/api/auth', authRoutes);    
 app.use('/stories', storiesRoutes);
 
+app.get('/stories', async (req, res) => {
+  try {
+    const stories = await Post.find({ isStory: true }); // Fetch only story-type posts
+    res.render('stories', { stories }); // Render the correct EJS file
+  } catch (err) {
+    console.error('Error fetching stories:', err);
+    res.render('stories', { stories: [] }); // Prevent crash if DB fails
+  }
+});
+
 
 // Server Start
 const PORT = process.env.PORT || 5000;

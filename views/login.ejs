@@ -1,51 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CipherGhostss | Login</title>
-    <!-- Cyberpunk Stylesheet -->
-    <link rel="stylesheet" href="/assets/css/cyberpunk.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CipherGhostss | Login</title>
+  <meta name="description" content="Explore chilling stories behind the screen with CipherGhostss — a blog uncovering cyber crimes, tech careers, and tales from the digital underworld.">
+  <meta name="keywords" content="cybersecurity, cyber crimes, hacker stories, tech careers, digital forensics, cyber heists, cyberpunk blog, CipherGhostss, tech tales">
+  <meta name="author" content="CipherGhostss">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="CipherGhostss | Cyber Crimes & Tech Tales">
+  <meta property="og:description" content="Unveiling cyber heists and tech stories that live behind the screen. Discover how code, careers, and chaos shape our digital world.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.cipherghostss.netlify.app/">
+  <meta property="og:image" content="https://www.cipherghostss.netlify.app/assets/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CipherGhostss | Cyber Crimes & Tech Careers">
+  <meta name="twitter:description" content="Dive into digital shadows. Stories of hacks, heists, and hacker life.">
+  <meta name="twitter:image" content="https://www.cipherghostss.netlify.app/assets/images/preview.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/images/cipher3.jpg" type="image/png">
+  <!-- Cyberpunk Stylesheet -->
+  <link rel="stylesheet" href="assets/css/main.css"> <!-- Using the same CSS as Sign Up -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Courier New', Courier, monospace;
+      background: black;
+    }
+
+    .cyber-container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .left-side {
+      flex: 1;
+      background: black;
+      color: #0f0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .right-side {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .form-container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      width: 80%;
+      color: white;
+    }
+
+    .hacking-text {
+      z-index: 1;
+      text-align: center;
+      color: #0f0;
+      font-size: 1.2rem;
+    }
+
+    #matrix {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .glow-on-hover {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #0f0;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .glow-on-hover:hover {
+      box-shadow: 0 0 20px #0f0;
+    }
+
+    .form-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      background: #111;
+      border: 1px solid #0f0;
+      border-radius: 5px;
+      color: #0f0;
+    }
+
+    .form-control::placeholder {
+      color: #0f0;
+    }
+
+    a {
+      color: #ff0066;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+  </style>
 </head>
 <body>
-    <div class="wrapper bg-animate">
-        <div class="inner animate__animated animate__fadeInDown">
-            <div class="image-holder">
-                <img src="/assets/images/ai.webp" alt="">
-            </div>
-
-            <!-- Login Form -->
-            <form action="/api/auth/login" method="POST" class="animate__animated animate__fadeInUp">
-                <h3>Login Form</h3>
-
-                <% if (errors && errors.length > 0) { %>
-                    <div style="color: red; margin-bottom: 15px;">
-                        <ul>
-                            <% errors.forEach(error => { %>
-                                <li><%= error.msg %></li>
-                            <% }) %>
-                        </ul>
-                    </div>
-                <% } %>
-
-                <div class="form-wrapper">
-                    <input type="email" name="email" placeholder="Email Address" class="form-control" required>
-                    <i class="zmdi zmdi-email"></i>
-                </div>
-
-                <div class="form-wrapper">
-                    <input type="password" name="password" placeholder="Password" class="form-control" required>
-                    <i class="zmdi zmdi-lock"></i>
-                </div>
-
-                <button type="submit" class="glow-on-hover">Login
-                    <i class="zmdi zmdi-arrow-right"></i>
-                </button>
-
-                <p>Don't have an account? <a href="/signup" class="signup-link">Sign up here</a></p>
-            </form>
-        </div>
+  <div class="cyber-container">
+    <!-- Left Animation Area -->
+    <div class="left-side">
+      <canvas id="matrix"></canvas>
+      <div class="hacking-text animate__animated animate__fadeInLeft">
+        <h2>Decrypting Reality...</h2>
+        <p>Welcome to CipherGhostss</p>
+      </div>
     </div>
+
+    <!-- Right Login Form Area -->
+    <div class="right-side">
+      <div class="form-container animate__animated animate__fadeInRight">
+        <form action="/api/auth/login" method="POST" autocomplete="off">
+          <h3>Login Form</h3>
+
+          <% if (errors && errors.length > 0) { %>
+            <div style="color: red; margin-bottom: 15px;">
+              <ul>
+                <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+                <% }) %>
+              </ul>
+            </div>
+          <% } %>
+
+          <div class="form-wrapper">
+            <input type="email" name="email" placeholder="Email Address" class="form-control" autocomplete="off" required />
+          </div>
+
+          <div class="form-wrapper">
+            <input type="password" name="password" placeholder="Password" class="form-control" autocomplete="new-password" required />
+          </div>
+
+          <button type="submit" class="glow-on-hover">Login</button>
+
+          <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+            <!-- Google Sign-In Button -->
+      <div class="google-signin-container">
+        <a href="/auth/google" class="google-signin-button">
+          <img src="/assets/images/google.webp" alt="Google Logo" style="width: 20px; margin-right: 10px;">
+          Sign in with Google
+        </a>
+      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matrix JavaScript Animation -->
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth / 2;
+
+    const letters = "0101010111010101001010110";
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 33);
+  </script>
 </body>
 </html>
