@@ -6,7 +6,7 @@ const PostSchema = new mongoose.Schema({
   excerpt: { type: String, required: true },
   image: { type: String, required: true },
   content: { type: String, required: true },
-  isStory: { type: Boolean, default: false },
+  isStory: { type: Boolean, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.models.Post || mongoose.model('Post', PostSchema);

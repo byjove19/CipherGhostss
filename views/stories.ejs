@@ -35,10 +35,33 @@
     </nav>
   </header>
 
-  <!-- Banner -->
-  <section class="banner">
-    <h2 class="align-center">📚 Featured Cybercrime Stories</h2>
-  </section>
+ <!-- Hero Banner with Slider -->
+<section class="banner hero-slider">
+  <div class="slider-container">
+    <div class="slide fade-in">
+      <img src="/assets/images/hacker-slide1.jpeg" alt="Hacker in the Shadows">
+      <div class="slide-caption">
+        <h2>📚 Dive into the Dark Web Diaries</h2>
+        <p class="typing">Real cybercrime. Real exploits. Real consequences.</p>
+      </div>
+    </div>
+    <div class="slide fade-in">
+      <img src="/assets/images/hacker-slide3.jpeg" alt="Firewall breach animation">
+      <div class="slide-caption">
+        <h2>🔓 When Firewalls Fail</h2>
+        <p class="typing">Explore moments when digital vaults were cracked open.</p>
+      </div>
+    </div>
+    <div class="slide fade-in">
+      <img src="/assets/images/hacker-slide2.jpeg" alt="White hat coding at night">
+      <div class="slide-caption">
+        <h2>👨‍💻 The Rise of the White Hat</h2>
+        <p class="typing">Meet the ethical hackers defending the web.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <!-- Stories Section -->
   <section id="stories" class="wrapper style2">
@@ -50,10 +73,11 @@
               <img src="<%= story.image %>" alt="<%= story.title %>" class="story-thumbnail">
               <h3><%= story.title %></h3>
               <p><%= story.excerpt %></p>
-              <a href="/posts/<%= story._id %>" class="button">Read Full Story</a>
+              <a href="/posts/<%= story.slug %>" class="button">Read Full Story</a>
+
             </div>
           <% }) %>
-        </div>
+        </div><br>
       <% } else { %>
         <p>No stories found. Come back later!</p>
       <% } %>
@@ -84,5 +108,20 @@
   <script src="/assets/js/skel.min.js"></script>
   <script src="/assets/js/util.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+  
+    function showSlides() {
+      slides.forEach(slide => slide.style.display = "none");
+      slideIndex++;
+      if (slideIndex > slides.length) slideIndex = 1;
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 5000); // Change every 5 seconds
+    }
+  
+    document.addEventListener("DOMContentLoaded", showSlides);
+  </script>
+  
 </body>
 </html>
