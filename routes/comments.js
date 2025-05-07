@@ -22,11 +22,13 @@ router.post(
         }
 
         try {
+            // Check if the post exists
             const post = await Post.findById(req.body.post);
             if (!post) {
                 return res.status(404).json({ msg: 'Post not found' });
             }
 
+            // Create new comment
             const newComment = new Comment({
                 content: req.body.content,
                 author: req.user.id,
@@ -39,9 +41,9 @@ router.post(
             post.comments.push(comment._id);
             await post.save();
 
-            res.json(comment);
+            res.json(comment); // Send the new comment back
         } catch (err) {
-            console.error(err.message);
+            console.error('Error in comment route:', err.message); // Log error
             res.status(500).send('Server Error');
         }
     }

@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const usersRoutes = require('./routes/users');
 const commentsRoutes = require('./routes/comments');
+const storiesRoutes = require('./routes/stories'); 
 
 // Models
 const Post = require('./models/Post');
@@ -87,8 +88,7 @@ app.post('/admin/edit/:id', async (req, res) => {
 
 app.get('/post', async (req, res) => {
   const postId = req.query.id; under /api/comments
-app.use('/posts', require('./routes/posts')); // Keep if needed for legacy support
-
+app.use('/posts', require('./routes/posts')); 
   const post = await Post.findById(postId);
   res.render('post', { post });
 });
@@ -114,6 +114,7 @@ app.use('/api', linksRoutes);
 app.use('/api', postRoutes);
 app.use('/api/comments', commentsRoutes);  
 app.use('/api/auth', authRoutes);    
+app.use('/stories', storiesRoutes);
 
 
 // Server Start

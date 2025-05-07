@@ -1,10 +1,10 @@
-const jwt = require('jsonwebtoken');
-
 module.exports = function (req, res, next) {
     const token = req.header('x-auth-token');
+    
+    console.log('Token:', token); // Debug log to see the token
 
     if (!token) {
-        return res.redirect('/signup'); 
+        return res.status(401).json({ msg: 'No token, authorization denied' });
     }
 
     try {
@@ -12,6 +12,7 @@ module.exports = function (req, res, next) {
         req.user = decoded.user;
         next();
     } catch (err) {
-        return res.redirect('/login'); // Or show an invalid token message
+        console.error('Token verification failed:', err.message); // Log error
+        return res.status(401).json({ msg: 'Invalid token' });
     }
 };

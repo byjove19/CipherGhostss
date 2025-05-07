@@ -33,4 +33,14 @@ router.post('/:id/comments', async (req, res) => {
   }
 });
 
+// Route to display all stories
+router.get('/stories', async (req, res) => {
+  try {
+    const stories = await Post.find({ isStory: true });  // Filter posts marked as stories
+    res.render('stories', { stories });
+  } catch (error) {
+    res.status(500).send('Error fetching stories');
+  }
+});
+
 module.exports = router;

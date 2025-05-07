@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CipherGhostss | Cyber Stories Archive</title>
+
+  <meta name="description" content="Dive into the vault of cybercrime stories and hacker chronicles with CipherGhostss.">
+  <meta name="keywords" content="cybersecurity stories, cyber heists, hacker tales, CipherGhostss blog">
+  <meta name="author" content="CipherGhostss">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:title" content="CipherGhostss | Stories Archive">
+  <meta property="og:description" content="Explore chilling stories and digital heists.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.cipherghostss.netlify.app/stories">
+  <meta property="og:image" content="https://www.cipherghostss.netlify.app/assets/images/og-image.jpg">
+
+  <link rel="icon" href="/assets/images/cipher3.jpg" type="image/png">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Header -->
+  <header id="header" class="alt">
+    <div class="logo"><a href="/">Cipher<span>Ghostss</span></a></div>
+    <a href="#menu">Menu</a>
+    <nav id="menu">
+      <ul class="links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/stories">Stories</a></li>
+        <li><a href="/signup">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Banner -->
+  <section class="banner">
+    <h2 class="align-center">📚 Featured Cybercrime Stories</h2>
+  </section>
+
+  <!-- Stories Section -->
+  <section id="stories" class="wrapper style2">
+    <div class="inner">
+      <% if (stories.length > 0) { %>
+        <div class="story-grid">
+          <% stories.forEach(story => { %>
+            <div class="story-card">
+              <img src="<%= story.image %>" alt="<%= story.title %>" class="story-thumbnail">
+              <h3><%= story.title %></h3>
+              <p><%= story.excerpt %></p>
+              <a href="/posts/<%= story._id %>" class="button">Read Full Story</a>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p>No stories found. Come back later!</p>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="cyberpunk-footer">
+    <div class="container">
+      <ul class="icons">
+        <li><a href="https://twitter.com/CipherGhostss" class="icon fa-twitter" target="_blank"><span>Twitter</span></a></li>
+        <li><a href="https://www.facebook.com/CipherGhostss" class="icon fa-facebook" target="_blank"><span>Facebook</span></a></li>
+        <li><a href="https://www.instagram.com/CipherGhostss" class="icon fa-instagram" target="_blank"><span>Instagram</span></a></li>
+        <li><a href="mailto:contact@cipherghostss.net" class="icon fa-envelope-o"><span>Email</span></a></li>
+        <li><a href="https://www.youtube.com/@CipherGhostss" class="icon fa-youtube" target="_blank"><span>YouTube</span></a></li>
+      </ul>
+    </div>
+    <div class="dynamic-copyright">
+      <p>&copy; <span id="current-year"></span> CipherGhostss. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/jquery.scrollex.min.js"></script>
+  <script src="/assets/js/skel.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
