@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const ensureAuthenticated = require('../middleware/authMiddleware');
 
 // Create a new post
 router.post('/create', async (req, res) => {
@@ -27,5 +28,21 @@ router.post('/create', async (req, res) => {
     res.status(500).json({ message: 'Server error.', error: err.message });
   }
 });
+// Secure the admin dashboard
+router.get('/admin', ensureAuthenticated, async (req, res) => {
+  const posts = await Post.find({});
+  res.render('admin', { posts });
+});
 
+// Protect delete
+router.post('/admin/delete/:id', ensureAuthenticated, async (req, res) => {
+  await Post.findByIdAndDelete(req.params.id);
+  res.redirect('/admin');
+});
+
+// Protect edit
+router.get('/admin/edit/:id', ensureAuthenticated, async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  res.render('edit', { post });
+});
 module.exports = router;

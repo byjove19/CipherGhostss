@@ -19,7 +19,76 @@
   <link rel="icon" href="/assets/images/cipher3.jpg" type="image/png">
   <link rel="stylesheet" href="/assets/css/main.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Smooth Scroll Effect */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Hero Banner Transitions */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Story Card Hover Effect */
+    .story-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .story-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Typing Animation for Captions */
+    .typing {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: .1em solid #fff;
+      width: 0;
+      animation: typing 3s steps(30) 1s forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Responsive Grid for Story Cards */
+    @media screen and (max-width: 768px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media screen and (min-width: 1200px) {
+      .story-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  </style>
 </head>
+
 
 <body>
   <!-- Header -->
@@ -87,6 +156,16 @@
   <!-- Footer -->
   <footer id="footer" class="cyberpunk-footer">
     <div class="container">
+       <!-- Newsletter Signup -->
+	  <div class="newsletter-signup">
+      <h3 class="neon-text">Subscribe to the CipherGhostss Newsletter</h3>
+      <p>Get the latest cyber heists, hacking stories, AI news, and deep tech drops — straight to your inbox.</p>
+      <form action="/subscribe" method="POST" class="newsletter-form">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit" class="neon-button">Subscribe</button>
+      </form>
+      </div>
+      
       <ul class="icons">
         <li><a href="https://twitter.com/CipherGhostss" class="icon fa-twitter" target="_blank"><span>Twitter</span></a></li>
         <li><a href="https://www.facebook.com/CipherGhostss" class="icon fa-facebook" target="_blank"><span>Facebook</span></a></li>
@@ -122,6 +201,45 @@
   
     document.addEventListener("DOMContentLoaded", showSlides);
   </script>
+  <script>
+    // Smooth Scrolling for internal links
+    $("a").on("click", function(event) {
+      if (this.hash !== "") {
+        event.preventDefault();
+        var hash = this.hash;
+        $("html, body").animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function(){
+          window.location.hash = hash;
+        });
+      }
+    });
+
+    // Slideshow auto cycle with smoother transitions
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
   
+    function showSlides() {
+      slides.forEach(slide => slide.style.display = "none");
+      slideIndex++;
+      if (slideIndex > slides.length) slideIndex = 1;
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 5000); // Change every 5 seconds
+    }
+  
+    document.addEventListener("DOMContentLoaded", showSlides);
+
+    // Hover Effects for Story Cards
+    const storyCards = document.querySelectorAll('.story-card');
+    storyCards.forEach(card => {
+      card.addEventListener('mouseover', () => {
+        card.style.transform = "scale(2.05)";
+        card.style.transition = "all 0.3s ease";
+      });
+      card.addEventListener('mouseout', () => {
+        card.style.transform = "scale(1)";
+      });
+    });
+  </script>
 </body>
 </html>

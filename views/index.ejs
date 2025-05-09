@@ -35,6 +35,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
+
 		<!-- Header -->
 <header id="header" class="alt">
 	<div class="logo"><a href="index.ejs">Cipher<span>Ghostss</span></a></div>
@@ -446,30 +447,98 @@
 			</div>
 		  </div>
 	  </div>
+	  <!-- Read More Stories Section -->
+	<div class="read-more-stories align-center" style="margin-top: 2rem;">
+		<h3>The rabbit hole goes deeper...</h3>
+		<p>Missed a breach? Curious how the next digital crime unfolded? We’ve got more real-world hacks, insider exploits, and cyber warfare tales waiting.</p>
+		<a href="/stories" class="button special">Uncover More Stories</a>
+	</div>
+  
 	</div>
   </section>
   
+  
 
    
-  <!-- Footer -->
-			<footer id="footer" class="cyberpunk-footer">
-				<div class="container">
-					<!-- Social Media Icons -->
-					<ul class="icons">
-						<li><a href="https://twitter.com/CipherGhostss" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
-						<li><a href="https://www.facebook.com/CipherGhostss" class="icon fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
-						<li><a href="https://www.instagram.com/CipherGhostss" class="icon fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-						<li><a href="mailto:contact@cipherghostss.net" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-						<li><a href="https://www.youtube.com/@CipherGhostss" class="icon fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
-					</ul>
-					
-				
-				<!-- Dynamic Year Section -->
-				<div class="dynamic-copyright">
-					<p>&copy; <span id="current-year"></span> CipherGhostss. All Rights Reserved.</p>
-				</div>
-			</footer>
-			
+<!-- Footer -->
+<footer id="footer" class="cyberpunk-footer">
+	<div class="container">
+	  
+	  <!-- Newsletter Signup -->
+	  <div class="newsletter-signup">
+		<h3 class="neon-text">Subscribe to the CipherGhostss Newsletter</h3>
+		<p>Get the latest cyber heists, hacking stories, AI news, and deep tech drops — straight to your inbox.</p>
+		<form action="/subscribe" method="POST" class="newsletter-form">
+		  <input type="email" name="email" placeholder="Enter your email" required>
+		  <button type="submit" class="neon-button">Subscribe</button>
+		</form>
+	  </div>
+  
+	  <!-- Social Media Icons -->
+	  <footer id="footer" class="cyberpunk-footer">
+		<div class="container">
+	  <ul class="icons">
+		<li><a href="https://twitter.com/CipherGhostss" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+		<li><a href="https://www.facebook.com/CipherGhostss" class="icon fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+		<li><a href="https://www.instagram.com/CipherGhostss" class="icon fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+		<li><a href="mailto:contact@cipherghostss.net" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+		<li><a href="https://www.youtube.com/@CipherGhostss" class="icon fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
+	  </ul>
+  
+	  <!-- Dynamic Year -->
+	  <div class="dynamic-copyright">
+		<p>&copy; <span id="current-year"></span> CipherGhostss. All Rights Reserved.</p>
+	  </div>
+	</div>
+  </footer>
+  
+  <!-- Year Script -->
+  <script>
+	document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.scrollex.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><script src="assets/js/main.js"></script></body></html>
+			<script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.scrollex.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><script src="assets/js/main.js"></script>
+<!-- Smooth Scroll for Better UX -->
+<script>
+	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+	  anchor.addEventListener("click", function (e) {
+		e.preventDefault();
+		document.querySelector(this.getAttribute("href"))?.scrollIntoView({
+		  behavior: "smooth"
+		});
+	  });
+	});
+  </script>
+  
+  <!-- Responsive Mobile Menu Toggle -->
+  <script>
+	const menu = document.getElementById("menu");
+	const menuLink = document.querySelector("header a[href='#menu']");
+  
+	menuLink.addEventListener("click", (e) => {
+	  e.preventDefault();
+	  menu.classList.toggle("active");
+	});
+  
+	// Close menu on link click (optional)
+	menu.querySelectorAll("a").forEach(link =>
+	  link.addEventListener("click", () => menu.classList.remove("active"))
+	);
+  </script>
+  
+  <!-- Scroll Reveal Animations -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+	ScrollReveal().reveal('.box', {
+	  delay: 200,
+	  duration: 800,
+	  easing: 'ease-in-out',
+	  distance: '50px',
+	  origin: 'bottom',
+	  reset: false,
+	  interval: 100
+	});
+  </script>
+		  
+</body></html>

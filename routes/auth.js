@@ -5,6 +5,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+
 // GET Register Page
 router.get('/register', (req, res) => {
   res.render('signup', { errors: [] });
@@ -82,5 +83,6 @@ router.post('/login', [
     res.status(500).send('Server error');
   }
 });
+
 
 module.exports = router;
