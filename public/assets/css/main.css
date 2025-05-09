@@ -4714,3 +4714,89 @@
   background: #ff3366;
   box-shadow: 0 0 8px #ff3366, 0 0 20px #ff3366;
 }
+/* YouTube Promo Section */
+.youtube-promo-container {
+  max-width: 750px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: radial-gradient(circle at top left, #121212, #000);
+  border: 2px solid #ff0077;
+  box-shadow: 0 0 25px #ff0077aa;
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Terminal Text */
+.terminal-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  min-height: 150px;
+  color: #ffffff;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Glitch Effect for the Text */
+.glitch {
+  color: #ff0077;
+  font-weight: bold;
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #fff;
+  clip: rect(0, 0, 0, 0);
+}
+
+.glitch::before {
+  animation: glitchTop 2s infinite linear alternate-reverse;
+  color: #0ff;
+}
+
+.glitch::after {
+  animation: glitchBottom 2s infinite linear alternate-reverse;
+  color: #ff00ff;
+}
+
+@keyframes glitchTop {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(5px, 9999px, 20px, 0); }
+  20% { clip: rect(10px, 9999px, 15px, 0); }
+  30% { clip: rect(0px, 9999px, 10px, 0); }
+  100% { clip: rect(0, 9999px, 0, 0); }
+}
+
+@keyframes glitchBottom {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(10px, 9999px, 20px, 0); }
+  20% { clip: rect(0px, 9999px, 10px, 0); }
+  30% { clip: rect(15px, 9999px, 25px, 0); }
+  100% { clip: rect(0, 9999px, 0, 0); }
+}
+
+/* Button Glow */
+.btn-glow {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background-color: #ff0077;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  box-shadow: 0 0 15px #ff0077cc;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-glow:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #ff3399;
+}
