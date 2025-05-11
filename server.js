@@ -33,6 +33,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'c1pher@ghostss#',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: 'mongodb+srv://odionyejovy:Z5Fc7zOXIqkhr2Jw@cipherghostss.lpr2noh.mongodb.net/' }),
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 } // 1hr
+}));
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -64,7 +72,7 @@ app.get('/signup', (req, res) => {
 
 //admin login
 app.get('/adminlogin', (req, res) => {
-  res.render('adminlogin');  // Make sure you have 'adminlogin' view
+  res.render('adminlogin');  
 });
 
 // Handle admin login logic
@@ -87,9 +95,10 @@ app.post('/adminlogin', async (req, res) => {
     }
 
     // Save session with adminId
+   
     req.session.adminId = admin._id;
 
-    res.redirect('/admin/dashboard'); // Redirect to admin dashboard
+    res.redirect('/admin'); // Redirect to admin dashboard
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
@@ -172,14 +181,6 @@ app.use('/api', postRoutes);
 app.use('/api/comments', commentsRoutes);  
 app.use('/api/auth', authRoutes);    
 app.use('/stories', storiesRoutes);
-app.use(session({
-  secret: 'c1pher@ghostss#',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: 'mongodb+srv://odionyejovy:Z5Fc7zOXIqkhr2Jw@cipherghostss.lpr2noh.mongodb.net/' }),
-  cookie: { secure: false, maxAge: 1000 * 60 * 60 } // 1hr
-}));
-
 app.get('/stories', async (req, res) => {
   try {
     const stories = await Post.find({ isStory: true }); // Fetch only story-type posts
