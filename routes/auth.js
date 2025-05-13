@@ -5,7 +5,9 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-
+const createToken = (id) => {
+  return jwt.sign({ id }, 'cipherghostss', { expiresIn: '1d' });
+};
 // GET Register Page
 router.get('/register', (req, res) => {
   res.render('signup', { errors: [] });
@@ -53,7 +55,7 @@ router.post('/register', [
 
 // POST Login User
 router.post('/login', [
-  check('email', 'Valid email required').isEmail(),
+  check('username', 'Username is required').notEmpty(),
   check('password', 'Password is required').notEmpty()
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -61,10 +63,10 @@ router.post('/login', [
     return res.render('login', { errors: errors.array() });
   }
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username }); // Change email to username
     if (!user) {
       return res.render('login', { errors: [{ msg: 'Invalid credentials' }] });
     }
@@ -75,14 +77,21 @@ router.post('/login', [
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.cookie('token', token, { httpOnly: true });
 
-    res.redirect('/');
+    // Set the token in a secure cookie
+    res.cookie('token', token, { 
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Strict'
+    });
+
+    res.redirect('/'); // Redirect user after successful login
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
+
 
 
 module.exports = router;

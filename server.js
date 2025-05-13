@@ -8,6 +8,7 @@ const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -31,6 +32,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -69,44 +71,43 @@ app.get('/login', (req, res) => {
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
-
-//admin login
-app.get('/adminlogin', (req, res) => {
-  res.render('adminlogin');  
+app.get('/welcome', (req, res) => {
+  const username = req.session.username || ''; 
+  res.render('welcome', { username });
 });
 
-// Handle admin login logic
+app.get('/adminlogin', (req, res) => {
+  res.render('adminlogin'); 
+});
+
 app.post('/adminlogin', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Find admin by username
     const admin = await Admin.findOne({ username });
 
     if (!admin) {
       return res.status(401).send('Admin not found');
     }
 
-    // Compare passwords
     const isMatch = await bcrypt.compare(password, admin.password);
-
     if (!isMatch) {
       return res.status(401).send('Invalid password');
     }
 
-    // Save session with adminId
-   
-    req.session.adminId = admin._id;
+    req.session.adminId = admin._id; // Store the admin ID in the session
+    console.log('Session after login:', req.session); // Debugging session content
 
-    res.redirect('/admin'); // Redirect to admin dashboard
+    res.redirect('/admin'); // Redirect to the admin dashboard
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
 });
 
+
 // Render admin dashboard
-app.get('/admin/dashboard', ensureAuthenticated, async (req, res) => {
+app.get('/admin', ensureAuthenticated, async (req, res) => {
   const posts = await Post.find(); // Fetch all posts
   res.render('admin', { posts });  // Make sure you have 'admin' view
 });
@@ -181,6 +182,7 @@ app.use('/api', postRoutes);
 app.use('/api/comments', commentsRoutes);  
 app.use('/api/auth', authRoutes);    
 app.use('/stories', storiesRoutes);
+app.use('/admin', adminRoutes); 
 app.get('/stories', async (req, res) => {
   try {
     const stories = await Post.find({ isStory: true }); // Fetch only story-type posts

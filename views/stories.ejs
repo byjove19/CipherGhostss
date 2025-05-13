@@ -194,6 +194,14 @@
   <script src="/assets/js/util.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
+    fetch('/api/comments', {
+  method: 'POST',
+  body: JSON.stringify({ postId, comment }),
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  credentials: 'include' // ⬅️ THIS is required to send cookies!
+});
     let slideIndex = 0;
     const slides = document.querySelectorAll(".slide");
   

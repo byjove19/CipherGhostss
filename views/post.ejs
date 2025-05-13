@@ -118,19 +118,26 @@
   <script src="/assets/js/main.js"></script>
   
 <script>
+  // Handle form submission for commenting
   const commentForm = document.getElementById('commentForm');
+  
   commentForm.addEventListener('submit', async (e) => {
       e.preventDefault(); // Prevent default form submission
 
-      const content = e.target.content.value;
-      const postId = e.target.post.value;
+      const content = e.target.content.value.trim();  // Get the comment content
+      const postId = e.target.post.value;             // Get the post ID
+
+      if (!content) {
+          alert('Comment cannot be empty.');
+          return;
+      }
 
       try {
           const res = await fetch('/api/comments', {
               method: 'POST',
+              credentials: 'include', // ✅ Include cookies in the request
               headers: {
-                  'Content-Type': 'application/json',
-                  'x-auth-token': localStorage.getItem('token') // Assuming token is stored in localStorage
+                  'Content-Type': 'application/json'
               },
               body: JSON.stringify({ content, post: postId })
           });
@@ -138,57 +145,20 @@
           const data = await res.json();
 
           if (res.status === 401) {
-              // Handle the unauthorized error, e.g., redirect to login or show a message
-              alert('Please log in to post a comment');
-              window.location.href = '/login'; // Redirect to login
-          } else if (res.status === 200) {
-              // Handle successful comment submission
-              alert('Comment posted successfully');
-              location.reload(); // Optionally reload the page or update the comment section
+              alert('Please log in to comment.');
+              window.location.href = '/login';
+          } else if (res.ok) {
+              alert('Comment posted successfully!');
+              location.reload(); // Reload to show new comment
+          } else {
+              alert('Error: ' + (data.msg || 'Something went wrong.'));
           }
       } catch (err) {
-          console.error(err);
-          alert('There was an error posting the comment');
+          console.error('Error:', err);
+          alert('There was an error posting the comment.');
       }
   });
-
-  document.getElementById('commentForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const token = localStorage.getItem('token'); // Ensure token is stored on login
-    if (!token) {
-      alert('Please log in to comment.');
-      window.location.href = '/login';
-      return;
-    }
-
-    const content = this.content.value;
-    const post = this.post.value;
-
-    try {
-      const res = await fetch('/api/comments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': token
-        },
-        body: JSON.stringify({ content, post })
-      });
-
-      if (res.status === 200) {
-        const data = await res.json();
-        alert('Comment posted successfully!');
-        window.location.reload();
-      } else {
-        const error = await res.json();
-        alert('Failed: ' + (error.msg || 'Something went wrong.'));
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error posting comment');
-    }
-  });
-  
 </script>
+
 </body>
 </html>
