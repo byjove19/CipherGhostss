@@ -23,7 +23,7 @@ const storiesRoutes = require('./routes/stories');
 const ensureAuthenticated = require('./middleware/authMiddleware'); 
 
 // Models
-const Post = require('./models/Post');
+const Post = require('./models/post');
 const Comment = require('./models/comment');
 const Admin = require('./models/admin');
 
