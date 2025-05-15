@@ -17,7 +17,6 @@ const adminRoutes = require('./routes/admin');
 const linksRoutes = require('./routes/links');
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
-const usersRoutes = require('./routes/users');
 const commentsRoutes = require('./routes/comments');
 const storiesRoutes = require('./routes/stories'); 
 const ensureAuthenticated = require('./middleware/authMiddleware'); 
