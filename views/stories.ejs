@@ -1,21 +1,18 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CipherGhostss | Cyber Stories Archive</title>
-
   <meta name="description" content="Dive into the vault of cybercrime stories and hacker chronicles with CipherGhostss.">
   <meta name="keywords" content="cybersecurity stories, cyber heists, hacker tales, CipherGhostss blog">
   <meta name="author" content="CipherGhostss">
   <meta name="robots" content="index, follow">
-
   <meta property="og:title" content="CipherGhostss | Stories Archive">
   <meta property="og:description" content="Explore chilling stories and digital heists.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.cipherghostss.netlify.app/stories">
   <meta property="og:image" content="https://www.cipherghostss.netlify.app/assets/images/og-image.jpg">
-
   <link rel="icon" href="/assets/images/cipher3.jpg" type="image/png">
   <link rel="stylesheet" href="/assets/css/main.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -40,7 +37,7 @@
     .story-card {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     .story-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -67,17 +64,15 @@
     }
 
     /* Responsive Grid for Story Cards */
-    @media screen and (max-width: 768px) {
-      .story-grid {
-        grid-template-columns: 1fr;
-      }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
 
     @media screen and (min-width: 768px) {
       .story-grid {
-        display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
       }
     }
 
@@ -88,49 +83,39 @@
     }
   </style>
 </head>
-
-
 <body>
   <!-- Header -->
   <header id="header" class="alt">
     <div class="logo"><a href="/">Cipher<span>Ghostss</span></a></div>
-    <a href="#menu">Menu</a>
-    <nav id="menu">
-      <ul class="links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/stories">Stories</a></li>
-        <li><a href="/signup">Login</a></li>
-      </ul>
-    </nav>
+    
   </header>
 
- <!-- Hero Banner with Slider -->
-<section class="banner hero-slider">
-  <div class="slider-container">
-    <div class="slide fade-in">
-      <img src="/assets/images/hacker-slide1.jpeg" alt="Hacker in the Shadows">
-      <div class="slide-caption">
-        <h2>📚 Dive into the Dark Web Diaries</h2>
-        <p class="typing">Real cybercrime. Real exploits. Real consequences.</p>
+  <!-- Hero Banner with Slider -->
+  <section class="banner hero-slider">
+    <div class="slider-container">
+      <div class="slide fade-in">
+        <img src="/assets/images/darkweb.webp" alt="Hacker in the Shadows">
+        <div class="slide-caption">
+          <h2></h2>
+          <p class="typing">Real cybercrime. Real exploits. Real consequences.</p>
+        </div>
+      </div>
+      <div class="slide fade-in">
+        <img src="/assets/images/hacker-slide3.jpeg" alt="Firewall breach animation">
+        <div class="slide-caption">
+          <h2>🔓 When Firewalls Fail</h2>
+          <p class="typing">Explore moments when digital vaults were cracked open.</p>
+        </div>
+      </div>
+      <div class="slide fade-in">
+        <img src="/assets/images/hacker-slide2.jpeg" alt="White hat coding at night">
+        <div class="slide-caption">
+          <h2>👨‍💻 The Rise of the White Hat</h2>
+          <p class="typing">Meet the ethical hackers defending the web.</p>
+        </div>
       </div>
     </div>
-    <div class="slide fade-in">
-      <img src="/assets/images/hacker-slide3.jpeg" alt="Firewall breach animation">
-      <div class="slide-caption">
-        <h2>🔓 When Firewalls Fail</h2>
-        <p class="typing">Explore moments when digital vaults were cracked open.</p>
-      </div>
-    </div>
-    <div class="slide fade-in">
-      <img src="/assets/images/hacker-slide2.jpeg" alt="White hat coding at night">
-      <div class="slide-caption">
-        <h2>👨‍💻 The Rise of the White Hat</h2>
-        <p class="typing">Meet the ethical hackers defending the web.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- Stories Section -->
   <section id="stories" class="wrapper style2">
@@ -143,7 +128,6 @@
               <h3><%= story.title %></h3>
               <p><%= story.excerpt %></p>
               <a href="/post/<%= story.slug %>" class="button">Read Full Story</a>
-
             </div>
           <% }) %>
         </div><br>
@@ -152,26 +136,24 @@
       <% } %>
     </div>
     <div class="read-more-stories align-center" style="margin-top: 2rem;">
-  <h3>Ready to see the hacks unfold?</h3>
-  <p>From stealthy social engineering to billion-dollar breaches, we bring the wildest cyber stories to life—one video at a time.</p>
-  <a href="https://youtube.com/yourchannel" class="button special" target="_blank">Watch the Breaches</a>
-</div>
-
+      <h3>Ready to see the hacks unfold?</h3>
+      <p>From stealthy social engineering to billion-dollar breaches, we bring the wildest cyber stories to life—one video at a time.</p>
+      <a href="https://youtube.com/yourchannel" class="button special" target="_blank">Watch the Breaches</a>
+    </div>
   </section>
 
   <!-- Footer -->
   <footer id="footer" class="cyberpunk-footer">
     <div class="container">
-       <!-- Newsletter Signup -->
-	  <div class="newsletter-signup">
-      <h3 class="neon-text">Subscribe to the CipherGhostss Newsletter</h3>
-      <p>Get the latest cyber heists, hacking stories, AI news, and deep tech drops — straight to your inbox.</p>
-      <form action="/subscribe" method="POST" class="newsletter-form">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit" class="neon-button">Subscribe</button>
-      </form>
+      <!-- Newsletter Signup -->
+      <div class="newsletter-signup">
+        <h3 class="neon-text">Subscribe to the CipherGhostss Newsletter</h3>
+        <p>Get the latest cyber heists, hacking stories, AI news, and deep tech drops — straight to your inbox.</p>
+        <form action="/subscribe" method="POST" class="newsletter-form">
+          <input type="email" name="email" placeholder="Enter your email" required>
+          <button type="submit" class="neon-button">Subscribe</button>
+        </form>
       </div>
-      
       <ul class="icons">
         <li><a href="https://twitter.com/CipherGhostss" class="icon fa-twitter" target="_blank"><span>Twitter</span></a></li>
         <li><a href="https://www.facebook.com/CipherGhostss" class="icon fa-facebook" target="_blank"><span>Facebook</span></a></li>
@@ -194,28 +176,6 @@
   <script src="/assets/js/util.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
-    fetch('/api/comments', {
-  method: 'POST',
-  body: JSON.stringify({ postId, comment }),
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  credentials: 'include' // ⬅️ THIS is required to send cookies!
-});
-    let slideIndex = 0;
-    const slides = document.querySelectorAll(".slide");
-  
-    function showSlides() {
-      slides.forEach(slide => slide.style.display = "none");
-      slideIndex++;
-      if (slideIndex > slides.length) slideIndex = 1;
-      slides[slideIndex - 1].style.display = "block";
-      setTimeout(showSlides, 5000); // Change every 5 seconds
-    }
-  
-    document.addEventListener("DOMContentLoaded", showSlides);
-  </script>
-  <script>
     // Smooth Scrolling for internal links
     $("a").on("click", function(event) {
       if (this.hash !== "") {
@@ -232,7 +192,7 @@
     // Slideshow auto cycle with smoother transitions
     let slideIndex = 0;
     const slides = document.querySelectorAll(".slide");
-  
+
     function showSlides() {
       slides.forEach(slide => slide.style.display = "none");
       slideIndex++;
@@ -240,14 +200,14 @@
       slides[slideIndex - 1].style.display = "block";
       setTimeout(showSlides, 5000); // Change every 5 seconds
     }
-  
+
     document.addEventListener("DOMContentLoaded", showSlides);
 
     // Hover Effects for Story Cards
     const storyCards = document.querySelectorAll('.story-card');
     storyCards.forEach(card => {
       card.addEventListener('mouseover', () => {
-        card.style.transform = "scale(2.05)";
+        card.style.transform = "scale(1.05)";
         card.style.transition = "all 0.3s ease";
       });
       card.addEventListener('mouseout', () => {

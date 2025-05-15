@@ -311,5 +311,6 @@ var settings = {
 			}
 
 	});
+	
 
 })(jQuery);

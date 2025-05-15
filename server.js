@@ -139,7 +139,7 @@ app.post('/admin/edit/:id', async (req, res) => {
     title: req.body.title,
     content: req.body.content,
   });
-  res.redirect('/admin/dashboard');
+  res.redirect('/admin');
 });
 
 // Log out and destroy session
