@@ -41,8 +41,27 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: 'mongodb+srv://odionyejovy:Z5Fc7zOXIqkhr2Jw@cipherghostss.lpr2noh.mongodb.net/' }),
   cookie: { secure: false, maxAge: 1000 * 60 * 60 } // 1hr
 }));
+// middleware to make user available in all EJS views
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 
 
+app.use(async (req, res, next) => {
+  const token = req.cookies.token;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select('username');
+    } catch (err) {
+      req.user = null;
+    }
+  } else {
+    req.user = null;
+  }
+  next();
+});
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
@@ -182,6 +201,7 @@ app.use('/api/comments', commentsRoutes);
 app.use('/api/auth', authRoutes);    
 app.use('/stories', storiesRoutes);
 app.use('/admin', adminRoutes); 
+
 app.get('/stories', async (req, res) => {
   try {
     const stories = await Post.find({ isStory: true }); // Fetch only story-type posts

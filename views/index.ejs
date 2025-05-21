@@ -3,37 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CipherGhostss | Cybercrime Blog, Hacker Tales & Tech Career Insights</title>
 
-  <!-- SEO Meta Tags -->
-  
-<title>CipherGhostss | Unveiling the Dark Web of Cybercrime & Tech</title>
-  <meta name="description" content="Explore chilling stories behind the screen with CipherGhostss — a blog uncovering cyber crimes, tech careers, and tales from the digital underworld.">
-  <meta name="keywords" content="cybersecurity, cyber crimes, hacker stories, tech careers, digital forensics, cyber heists, cyberpunk blog, CipherGhostss, tech tales">
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="CipherGhostss | Cybercrime Blog, Hacker Tales & Tech Career Insights">
+  <meta name="description" content="Uncover real hacking stories, cyber heists, digital forensics, and career paths in tech. CipherGhostss is your guide to the thrilling dark side of the internet.">
+  <meta name="keywords" content="cybersecurity blog, hacker stories, cybercrime news, dark web, tech career blog, cyberpunk stories, ethical hacking, CipherGhostss, tech underworld, hacking tales">
   <meta name="author" content="CipherGhostss">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cipherghostss.onrender.com/">
 
-  <!-- Open Graph for Social Sharing -->
-  <meta property="og:title" content="CipherGhostss | Cyber Crimes & Tech Tales">
-  <meta property="og:description" content="Unveiling cyber heists and tech stories that live behind the screen. Discover how code, careers, and chaos shape our digital world.">
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.cipherghostss.onrender.com/">
-  <meta property="og:image" content="https://www.cipherghostss.onrender.com/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://cipherghostss.onrender.com/">
+  <meta property="og:title" content="CipherGhostss | Hacker Stories, Cyber Heists & Tech Careers">
+  <meta property="og:description" content="Explore true stories of hacking, cybercrime, and the digital underworld with CipherGhostss — your dark tech blog.">
+  <meta property="og:image" content="https://cipherghostss.onrender.com/assets/images/og-image.jpg">
+  <meta property="og:image:alt" content="Dark web hacker at terminal - CipherGhostss banner">
 
-  <!-- Twitter Card -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CipherGhostss | Cyber Crimes & Tech Careers">
-  <meta name="twitter:description" content="Dive into digital shadows. Stories of hacks, heists, and hacker life.">
-  <meta name="twitter:image" content="https://www.cipherghostss.onrender.com/assets/images/preview.jpg">
+  <meta name="twitter:url" content="https://cipherghostss.onrender.com/">
+  <meta name="twitter:title" content="CipherGhostss | Hacker Stories, Cyber Heists & Tech Careers">
+  <meta name="twitter:description" content="Explore true stories of hacking, cybercrime, and tech life with CipherGhostss — where the shadows speak.">
+  <meta name="twitter:image" content="https://cipherghostss.onrender.com/assets/images/preview.jpg">
+  <meta name="twitter:image:alt" content="Cyberpunk-styled CipherGhostss cover with hacker imagery">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "CipherGhostss",
+    "url": "https://cipherghostss.onrender.com/",
+    "description": "CipherGhostss is a cybercrime and tech career blog uncovering real hacking stories, digital forensics, and the secrets of the dark web.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CipherGhostss",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cipherghostss.onrender.com/assets/images/cipher3.jpg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://cipherghostss.onrender.com/"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://cipherghostss.onrender.com/assets/images/og-image.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" href="/assets/images/cipher3.jpg" type="image/png">
 
   <!-- Fonts & Styles -->
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
+
 
 
 		<!-- Header -->
@@ -43,14 +77,20 @@
   </header>
   
   <!-- Nav -->
-  <nav id="menu">
-	<ul class="links">
-	  <li><a href="#index">Home</a></li>
-	  <li><a href="/stories">Stories</a></li>
-	  <li><a href="/signup">Login</a></li>
-	</ul>
-  </nav>
-  
+ <nav id="menu">
+  <ul class="links">
+    <li><a href="#index">Home</a></li>
+    <li><a href="/stories">Stories</a></li>
+
+    <% if (user) { %>
+      <li><a href="#">👤 <%= user.username %></a></li>
+      <li><a href="/logout">Logout</a></li>
+    <% } else { %>
+      <li><a href="/signup">Login</a></li>
+    <% } %>
+  </ul>
+</nav>
+
   <!-- Banner with Video Background -->
   <section class="banner full">
 	<article>
