@@ -1,36 +1,12 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema({
-  content: {
-    type: String,
-    required: true
-  },
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  post: {
-    type: Schema.Types.ObjectId,
-    ref: 'Post',
-    required: true
-  },
-  parentComment: {
-    type: Schema.Types.ObjectId,
-    ref: 'Comment',
-    default: null
-  },
-  reactions: {
-    like: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    love: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    laugh: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    angry: [{ type: Schema.Types.ObjectId, ref: 'User' }]
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+const CommentSchema = new mongoose.Schema({
+  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  content: { type: String, required: true },
+  parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null }, // For replies
+  likes: { type: Number, default: 0 },
+  dislikes: { type: Number, default: 0 },
+}, { timestamps: true });
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.models.Comment || mongoose.model('Comment', CommentSchema);

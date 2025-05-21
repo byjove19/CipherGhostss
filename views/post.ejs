@@ -54,28 +54,28 @@
 
       <hr>
 
-      <!-- Comment Form -->
-      <h3>Leave a Comment</h3>
-      <form action="/api/comments" method="POST">
-        <input type="hidden" name="post" value="<%= post._id %>" />
-        <textarea name="content" placeholder="Write a comment..."></textarea>
-        <button type="submit">Post Comment</button>
-      </form>
+     <!-- Comment Form -->
+<h3>Leave a Comment</h3>
+<form id="commentForm">
+  <input type="hidden" name="post" value="<%= post._id %>" />
+  <textarea name="content" placeholder="Write a comment..." required></textarea>
+  <button type="submit">Post Comment</button>
+</form>
 
-      <!-- Display Comments -->
-      <h3>Comments</h3>
-      <% if (post.comments && post.comments.length > 0) { %>
-        <ul>
-          <% post.comments.forEach(comment => { %>
-            <li>
-              <strong><%= comment.username %>:</strong> <%= comment.comment %><br>
-              <small><%= new Date(comment.date).toDateString() %></small>
-            </li>
-          <% }) %>
-        </ul>
-      <% } else { %>
-        <p>No comments yet. Be the first to comment!</p>
-      <% } %>
+<!-- Display Comments -->
+<h3>Comments</h3>
+<% if (comments && comments.length > 0) { %>
+  <ul>
+    <% comments.forEach(comment => { %>
+      <li>
+        <strong><%= comment.author.username %>:</strong> <%= comment.content %><br>
+        <small><%= new Date(comment.createdAt).toDateString() %></small>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No comments yet. Be the first to comment!</p>
+<% } %>
 
       <br>
       <a href="/">← Back to Home</a>
@@ -109,46 +109,48 @@
   <script src="/assets/js/main.js"></script>
   
 <script>
-  // Handle form submission for commenting
   const commentForm = document.getElementById('commentForm');
-  
-  commentForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent default form submission
 
-      const content = e.target.content.value.trim();  // Get the comment content
-      const postId = e.target.post.value;             // Get the post ID
+  if (commentForm) {
+    commentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const content = e.target.content.value.trim();
+      const postId = e.target.post.value;
 
       if (!content) {
-          alert('Comment cannot be empty.');
-          return;
+        alert('Comment cannot be empty.');
+        return;
       }
 
       try {
-          const res = await fetch('/api/comments', {
-              method: 'POST',
-              credentials: 'include', // ✅ Include cookies in the request
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ content, post: postId })
-          });
+        const res = await fetch('/api/comments', {
+          method: 'POST',
+          credentials: 'include', // Important: Send cookies
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ content, post: postId })
+        });
 
-          const data = await res.json();
+        const data = await res.json();
 
-          if (res.status === 401) {
-              alert('Please log in to comment.');
-              window.location.href = '/login';
-          } else if (res.ok) {
-              alert('Comment posted successfully!');
-              location.reload(); // Reload to show new comment
-          } else {
-              alert('Error: ' + (data.msg || 'Something went wrong.'));
-          }
-      } catch (err) {
-          console.error('Error:', err);
-          alert('There was an error posting the comment.');
+        if (res.status === 401 || res.status === 403) {
+          alert('Please log in to comment.');
+          window.location.href = '/login';
+        } else if (res.ok) {
+          alert('Comment posted!');
+          location.reload(); // Refresh to display the new comment
+        } else {
+          alert(data.error || 'Something went wrong.');
+        }
+
+      } catch (error) {
+        console.error('Comment error:', error);
+        alert('Something went wrong while posting comment.');
       }
-  });
+    });
+  }
 </script>
 
 </body>

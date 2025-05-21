@@ -41,17 +41,21 @@ router.post('/register', [
     user = new User({ username, email, password: hashedPassword });
     await user.save();
 
-    // Optionally, auto login or show welcome page then redirect
-    res.render('welcome', { username });
+    // 🔐 Create JWT and set cookie
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Strict'
+    });
 
-    // Or redirect after short delay
-    // setTimeout(() => res.redirect('/login'), 2000);
-
+    res.redirect('/'); // Or render welcome page if desired
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
+
 
 // POST Login User
 router.post('/login', [
@@ -92,10 +96,16 @@ router.post('/login', [
   }
 });
 
-
-router.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.redirect("/");
+router.get('/logout', (req, res) => {
+  res.clearCookie('token'); // Clear JWT
+  if (req.session) {
+    req.session.destroy(() => {
+      res.redirect('/');
+    });
+  } else {
+    res.redirect('/');
+  }
 });
+
 
 module.exports = router;
