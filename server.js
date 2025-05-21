@@ -34,13 +34,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'c1pher@ghostss#',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: 'mongodb+srv://odionyejovy:Z5Fc7zOXIqkhr2Jw@cipherghostss.lpr2noh.mongodb.net/' }),
-  cookie: { secure: false, maxAge: 1000 * 60 * 60 } // 1hr
-}));
+
 // middleware to make user available in all EJS views
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
