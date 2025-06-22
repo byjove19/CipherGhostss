@@ -35,6 +35,13 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'c1pher@ghostss#',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 // middleware to make user available in all EJS views
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
